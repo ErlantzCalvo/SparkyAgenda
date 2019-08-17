@@ -1,0 +1,105 @@
+body {
+    font-family:  "Andale Mono", AndaleMono, monospace; /*"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+    color: #333;
+    font-size: 16px;
+    text-align: center;
+    overflow: hidden;
+}
+.container {
+    width: 500px;
+    height: auto;
+    display: block;
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 3px;
+    text-align: left;
+    margin: 60px auto;
+}
+h1 {
+    font-weight: 300;
+    text-align: center;
+    margin: 40px auto;
+}
+.calendar {
+    display: block;
+}
+.calendar-day {
+    box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 2px 8px;
+    width: 8.6599%;
+    line-height: 2px;
+    margin: 1%;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    border: solid 1px #fff;
+}
+.calendar-day:hover {
+    background: #eee;
+}
+.controls {
+    display: block;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.today {
+    font-weight: bolder;
+    color: #333;
+    border-color: #000;
+    border-style: solid;
+    
+    
+    
+}
+.label {
+    box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 10px;
+    line-height: 2px;
+    margin: 1%;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    border: solid 1px #fff;
+}
+.previous {
+    float: left;
+    align-content: center;
+}
+.next {
+    float: right;
+    align-content: center;
+}
+
+.label i {
+    line-height: 0;
+}
+
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+        -webkit-user-drag: none;
+        
+  }
+
+  #current-month {
+      text-transform: uppercase;
+      font-size: 18px;
+      font-weight: 100;
+      padding: 20px;
+      cursor: default;
+  }
+
+  .weekend {
+      background-color: #DBE9FE;
+  }
