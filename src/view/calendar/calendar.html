@@ -7,6 +7,25 @@
     
             <div class="calendar" id="calendar">
             </div>
+
+            <div data-modal="trigger-1" class="modal" onclick="cancelModal()">
+                <article class="content-wrapper" onclick="event.stopPropagation()">
+                    <div class="close-modal noselect" onclick="cancelModal()"></div>
+                    <header class="modal-header">
+                        <h2 id="modalTitle">Modal 1</h2>
+                    </header>
+                    <div class="content">
+                        <table id="modalContent" >
+                           <tr><th rowspan="2">No hay ningún evento para este día.</th></tr>
+                        </table>
+                    </div>
+                    <footer class="modal-footer">
+                        <button id="btnAddTask" class="action noselect" onclick="addTask()">Añadir</button>
+                        <button id="btnApply" class="action noselect" onclick="saveDayChanges(this)">Aceptar</button>
+                        <button id="btnCancel" class="action noselect" onclick="cancelModal()">Cancelar</button>
+                    </footer>
+                </article>
+            </div>
         
     </body>
 </html>

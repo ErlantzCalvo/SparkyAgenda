@@ -3,18 +3,19 @@
         <script type="text/javascript" src="../../js/calendar.js"></script>
         <script type="text/javascript" src="../../js/container.js"></script>
         <link rel="stylesheet" href="../calendar/calendar.css" />
+        <link rel="stylesheet" href="../schedule/schedule.css" />
         <link rel="stylesheet" href="container.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     </head>
     <body>
-        <div class="container">
+        <div id="container" >
             <div id="container_elements">
             <div id="mySidebar" class="sidebar">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-                    <a href="#">Calendario</a>
-                    <a href="#">Horario</a>
+                    <a href="#" onclick="loadScreen('../calendar/calendar.html')">Calendario</a>
+                    <a href="#" onclick="loadScreen('../schedule/schedule.html')">Horario</a>
                     </div>
-            <button class="openbtn" onclick="openNav()">☰</button>  
+            <div class="openbtn" onclick="openNav()">☰</div>  
             <a onclick="closeApp()" class="close"></a>
             <a onclick="minimizeApp()" class="minimize"></a>
         </div>

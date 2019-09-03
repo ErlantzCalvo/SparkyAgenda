@@ -1,4 +1,23 @@
 #schedule {
+    width: 95%;
     border-style: solid;
     border-radius: 20px;
+}
+table {
+    table-layout: fixed;
+}
+
+td { 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    word-wrap: break-word;
+}
+
+.addRemoveRowBtn {
+    text-align: center;
+    
+}
+.addRemoveRowBtn i {
+    cursor: pointer;
+    
 }

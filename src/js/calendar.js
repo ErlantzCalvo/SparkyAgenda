@@ -1,3 +1,10 @@
+/* eslint-disable no-unused-vars */
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+const shortid = require('shortid')
+
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
 var date = new Date()
 date.setDate(1)
@@ -38,6 +45,8 @@ function createCalendarDay (num, day, mon, year) {
 
   if (day === 'Sab' || day === 'Dom') newDay.className = 'calendar-day weekend'
   else newDay.className = 'calendar-day '
+
+  newDay.setAttribute('data-modal-trigger', 'trigger-1')
 
   // Set ID of element as date formatted "8-January" etc
   newDay.id = num + '-' + mon + '-' + year
@@ -90,6 +99,11 @@ function createMonth () {
   var currentMonthText = document.getElementById('current-month')
   currentMonthText.innerHTML = monthsAsString(date.getMonth()) + ' ' + date.getFullYear()
   getCurrentDay()
+  const buttons = document.querySelectorAll(`div[data-modal-trigger]`)
+
+  for (const button of buttons) {
+    modalEvent(button)
+  }
 }
 
 function getCurrentDay () {
@@ -105,5 +119,69 @@ function getCurrentDay () {
     var dayOfWeek = dayOfWeekAsString(todaysDate.getDay())
     if (dayOfWeek === 'Sab' || dayOfWeek === 'Dom') currentDay.className = 'calendar-day weekend today'
     else currentDay.className = 'calendar-day today'
+  }
+}
+
+function modalEvent (button) {
+  button.addEventListener('click', () => {
+    const modal = document.querySelector(`[data-modal=trigger-1]`)
+    document.getElementById('modalTitle').innerHTML = button.id.replace(/-/g, ' ')
+    modal.id = button.id
+    modal.classList.toggle('open')
+    loadDayTasks(button.id)
+  })
+}
+
+function addTask () {
+  const content = document.getElementById('modalContent')
+  const tr = document.createElement('TR')
+  const tdTaskText = document.createElement('TD')
+  const textInput = document.createElement('INPUT')
+  const tdTaskType = document.createElement('TD')
+  const taskType = document.createElement('SELECT')
+  const eventOption = document.createElement('OPTION')
+  const birthdateOption = document.createElement('OPTION')
+  textInput.setAttribute('type', 'text')
+  tdTaskText.appendChild(textInput)
+  eventOption.setAttribute('value', 'event')
+  eventOption.innerHTML = 'Evento'
+  birthdateOption.setAttribute('value', 'birthdate')
+  birthdateOption.innerHTML = 'Cumpleaños'
+  taskType.appendChild(eventOption)
+  taskType.appendChild(birthdateOption)
+  tdTaskType.appendChild(taskType)
+  tr.appendChild(tdTaskText)
+  tr.appendChild(tdTaskType)
+  content.appendChild(tr)
+}
+
+function saveDayChanges (modal) {
+  var newTasksText = document.getElementById('modalContent').getElementsByTagName('input')
+  var newTasksType = document.getElementById('modalContent').getElementsByTagName('select')
+
+  for (let i = 0; i < newTasksText.length; i++) {
+    if (!newTasksText[i].value || newTasksText[i].value.length === 0) continue
+    if (newTasksType[i].selectedIndex === 0) {
+      db.get('calendar').get('events').push({ id: shortid.generate(), date: modal.parentNode.parentNode.parentNode.id, task: newTasksText[i].value }).write()
+    } else if (newTasksType[i].selectedIndex === 1) {
+      db.get('calendar.birthdays').push({ id: shortid.generate(), date: modal.parentNode.parentNode.parentNode.id, task: newTasksText[i].value }).write()
+    }
+  }
+  cancelModal() // Clean the modal before closing it.
+}
+
+function cancelModal () {
+  const modal = document.querySelector(`[data-modal=trigger-1]`)
+  const table = document.getElementById('modalContent')
+  table.innerHTML = ''
+  modal.classList.remove('open')
+}
+function loadDayTasks (taskDate) {
+  const dayEvents = db.get('calendar.events').filter({ date: taskDate }).value()
+  const dayBirths = db.get('calendar.birthdays').filter({ date: taskDate }).value()
+  for (let e in dayEvents) {
+    const tr = document.createElement('TR')
+    const tdText = document.createElement('TD')
+    const tdDelete = document.createElement('TD')
   }
 }
