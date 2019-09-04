@@ -76,6 +76,15 @@ body {
   .weekend {
       background-color: #DBE9FE;
   }
+  #modalContent {
+      width: 100%;
+  }
+  #modalContent tr {
+      text-align: left;
+  }
+  #modalContent .birthday {
+    color: #2B8FA8;
+}
 
   /* modal styles */
   button {
@@ -120,6 +129,7 @@ body {
     transform: scale(0.0);
     transition: scale(0.0) 0.25s;
     transition-delay: 0.15s;
+    overflow-y: initial !important;
     }
 .content-wrapper .close-modal {
     position: absolute;
@@ -177,6 +187,7 @@ body {
 .content {
     position: relative;
     display: flex;
+    overflow-y: auto;
 }
 .modal-footer {
     position: relative;

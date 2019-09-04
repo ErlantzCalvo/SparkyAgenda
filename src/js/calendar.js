@@ -164,7 +164,7 @@ function saveDayChanges (modal) {
     if (newTasksType[i].selectedIndex === 0) {
       db.get('calendar').get('events').push({ id: shortid.generate(), date: modal.parentNode.parentNode.parentNode.id, task: newTasksText[i].value }).write()
     } else if (newTasksType[i].selectedIndex === 1) {
-      db.get('calendar.birthdays').push({ id: shortid.generate(), date: modal.parentNode.parentNode.parentNode.id, task: newTasksText[i].value }).write()
+      db.get('calendar').get('birthdays').push({ id: shortid.generate(), date: modal.parentNode.parentNode.parentNode.id, task: newTasksText[i].value }).write()
     }
   }
   cancelModal() // Clean the modal before closing it.
@@ -179,9 +179,51 @@ function cancelModal () {
 function loadDayTasks (taskDate) {
   const dayEvents = db.get('calendar.events').filter({ date: taskDate }).value()
   const dayBirths = db.get('calendar.birthdays').filter({ date: taskDate }).value()
-  for (let e in dayEvents) {
+  if (dayEvents.length === 0 && dayBirths.length === 0) {
+    const tr = document.createElement('TR')
+    const thEmpty = document.createElement('TH')
+    thEmpty.innerHTML = 'No hay ningún evento para este día.'
+    thEmpty.setAttribute('rowspan', '2')
+    tr.appendChild(thEmpty)
+    document.getElementById('modalContent').appendChild(tr)
+    return
+  }
+  for (const ev of dayEvents) {
     const tr = document.createElement('TR')
     const tdText = document.createElement('TD')
     const tdDelete = document.createElement('TD')
+    const deleteButton = document.createElement('i')
+    deleteButton.classList.add('fa')
+    deleteButton.classList.add('fa-trash')
+    deleteButton.addEventListener('click', () => { deleteEvent(ev) })
+    tdText.innerHTML = ev.task
+    tdDelete.appendChild(deleteButton)
+    tr.appendChild(tdText)
+    tr.appendChild(tdDelete)
+    document.getElementById('modalContent').appendChild(tr)
   }
+  for (const b of dayBirths) {
+    const tr = document.createElement('TR')
+    const tdText = document.createElement('TD')
+    const tdDelete = document.createElement('TD')
+    const cakeIcon = document.createElement('i')
+    const deleteButton = document.createElement('i')
+    cakeIcon.classList.add('fa')
+    cakeIcon.classList.add('fa-birthday-cake')
+    cakeIcon.style.paddingLeft = '15px'
+    deleteButton.classList.add('fa')
+    deleteButton.classList.add('fa-trash')
+    deleteButton.addEventListener('click', () => { deleteEvent(b) })
+    tdText.innerHTML = b.task
+    tdText.appendChild(cakeIcon)
+    tdDelete.appendChild(deleteButton)
+    tr.appendChild(tdText)
+    tr.appendChild(tdDelete)
+    tr.classList.add('birthday')
+    document.getElementById('modalContent').appendChild(tr)
+  }
+}
+
+function deleteEvent (ev) {
+
 }
