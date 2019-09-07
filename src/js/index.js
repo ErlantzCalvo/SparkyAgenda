@@ -8,7 +8,7 @@ const db = low(adapter)
 function createWindow () {
   var winWidth = (db.has('window.width').value()) ? db.get('window.width').value() : 800
   var winHeight = (db.has('window.height').value()) ? db.get('window.height').value() : 600
-  const window = new BrowserWindow({ width: winWidth, height: winHeight, title: 'SparkyAgenda', backgroundColor: '#E9EBED', resizable: true, webPreferences: { nodeIntegration: true } })
+  const window = new BrowserWindow({ width: winWidth, height: winHeight, title: 'SparkyAgenda', frame: false, movable: true, backgroundColor: '#94ADB5', resizable: true, webPreferences: { nodeIntegration: true } })
   window.loadFile('./src/view/container/container.html')
   window.on('ready-to-show', () => window.show())
 

@@ -1,3 +1,6 @@
+body {
+  -webkit-app-region: drag;
+}
 #container {
   width: 100%;
   height: auto;
@@ -5,8 +8,12 @@
   overflow: hidden;
   padding: 20px;
   border-radius: 3px;
-  text-align: left;
-  margin: 60px auto;
+ text-align: left;
+ /* background-image: url('../../assets/img/butterflyBg.jpg') */
+}
+#container_elements {
+  width: 100%;
+  -webkit-app-region: drag;
 }
 
 h1 {
@@ -23,8 +30,16 @@ h1 {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
-      -webkit-user-drag: none;
+      -webkit-user-drag: none; 
+     
       
+}
+
+#screen {
+ margin: 60px auto;
+}
+#screen, .close, .minimize, .openbtn {
+  -webkit-app-region: no-drag;
 }
 /* X close styles*/
 .close {

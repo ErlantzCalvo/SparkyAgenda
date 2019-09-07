@@ -1,5 +1,5 @@
 body {
-    font-family:  "Andale Mono", AndaleMono, monospace; /*"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
     font-size: 16px;
     text-align: center;
@@ -84,6 +84,10 @@ body {
   }
   #modalContent .birthday {
     color: #2B8FA8;
+}
+.trash:hover {
+    color: #F46C47;
+    cursor: pointer;
 }
 
   /* modal styles */

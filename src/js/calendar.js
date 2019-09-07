@@ -5,7 +5,7 @@ const shortid = require('shortid')
 
 const adapter = new FileSync('db.json')
 const db = low(adapter)
-
+var emptyDay = false
 var date = new Date()
 date.setDate(1)
 
@@ -153,6 +153,11 @@ function addTask () {
   tr.appendChild(tdTaskText)
   tr.appendChild(tdTaskType)
   content.appendChild(tr)
+  textInput.focus()
+  if (emptyDay) {
+    document.getElementById('emptyTable').remove()
+    emptyDay = false
+  }
 }
 
 function saveDayChanges (modal) {
@@ -185,9 +190,12 @@ function loadDayTasks (taskDate) {
     thEmpty.innerHTML = 'No hay ningún evento para este día.'
     thEmpty.setAttribute('rowspan', '2')
     tr.appendChild(thEmpty)
+    tr.id = 'emptyTable'
+    emptyDay = true
     document.getElementById('modalContent').appendChild(tr)
     return
   }
+  emptyDay = false
   for (const ev of dayEvents) {
     const tr = document.createElement('TR')
     const tdText = document.createElement('TD')
@@ -195,11 +203,13 @@ function loadDayTasks (taskDate) {
     const deleteButton = document.createElement('i')
     deleteButton.classList.add('fa')
     deleteButton.classList.add('fa-trash')
-    deleteButton.addEventListener('click', () => { deleteEvent(ev) })
+    deleteButton.classList.add('trash')
+    deleteButton.addEventListener('click', () => { deleteEvent(deleteButton.parentElement.parentElement, 'events') })
     tdText.innerHTML = ev.task
     tdDelete.appendChild(deleteButton)
     tr.appendChild(tdText)
     tr.appendChild(tdDelete)
+    tr.id = ev.id
     document.getElementById('modalContent').appendChild(tr)
   }
   for (const b of dayBirths) {
@@ -213,17 +223,20 @@ function loadDayTasks (taskDate) {
     cakeIcon.style.paddingLeft = '15px'
     deleteButton.classList.add('fa')
     deleteButton.classList.add('fa-trash')
-    deleteButton.addEventListener('click', () => { deleteEvent(b) })
+    deleteButton.classList.add('trash')
+    deleteButton.addEventListener('click', () => { deleteEvent(deleteButton.parentElement.parentElement, 'birthdays') })
     tdText.innerHTML = b.task
     tdText.appendChild(cakeIcon)
     tdDelete.appendChild(deleteButton)
     tr.appendChild(tdText)
     tr.appendChild(tdDelete)
     tr.classList.add('birthday')
+    tr.id = b.id
     document.getElementById('modalContent').appendChild(tr)
   }
 }
 
-function deleteEvent (ev) {
-
+function deleteEvent (task, taskType) {
+  db.get('calendar').get(taskType).remove({ id: task.id }).write()
+  document.getElementById(task.id).remove()
 }
